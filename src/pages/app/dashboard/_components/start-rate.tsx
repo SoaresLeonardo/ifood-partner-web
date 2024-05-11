@@ -1,6 +1,13 @@
+import { cn } from "@/lib/utils";
 import { StarFilledIcon, StarIcon } from "@radix-ui/react-icons";
 
-export const StarRate = ({ rating }: { rating: number }) => {
+export const StarRate = ({
+  rating,
+  className,
+}: {
+  rating: number;
+  className?: string;
+}) => {
   const roundedRating = Math.round(rating);
 
   const stars = [];
@@ -13,5 +20,9 @@ export const StarRate = ({ rating }: { rating: number }) => {
     }
   }
 
-  return <div className="flex items-center absolute right-3">{stars}</div>;
+  return (
+    <div className={cn(`flex items-center absolute right-3`, className)}>
+      {stars}
+    </div>
+  );
 };

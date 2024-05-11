@@ -5,9 +5,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { FaceIcon } from "@radix-ui/react-icons";
-import { Comments } from "./comments";
+import { Evaluations } from "./evaluations";
 
-export const CommentsListCard = () => {
+export const EvaluationsListCard = () => {
   return (
     <Card className="col-span-3">
       <CardHeader>
@@ -17,7 +17,7 @@ export const CommentsListCard = () => {
         </CardTitle>
         <CardDescription>Avaliações recentes do restaurante</CardDescription>
       </CardHeader>
-      <Comments />
+      <Evaluations />
     </Card>
   );
 };

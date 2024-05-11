@@ -3,7 +3,7 @@ import AppLayout from "./pages/_layouts/app";
 import { SignIn } from "./pages/auth/sign-in";
 import { Auth } from "./pages/_layouts/auth";
 import { Dashboard } from "./pages/app/dashboard";
-import Comments from "./pages/app/comments";
+import Evaluations from "./pages/app/evaluations";
 
 export const router = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/comments",
-        element: <Comments />,
+        element: <Evaluations />,
       },
     ],
   },

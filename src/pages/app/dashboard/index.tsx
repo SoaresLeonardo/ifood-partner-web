@@ -1,4 +1,4 @@
-import { CommentsListCard } from "./_components/comments-list-card";
+import { EvaluationsListCard } from "./_components/comments-list-card";
 import { DayOrdersAmountCard } from "./_components/day-orders-amount-card";
 import { MounthCanceledOrdersCard } from "./_components/month-canceled-orders-card";
 import { MounthOrdersAmountCard } from "./_components/month-orders-amount-card";
@@ -19,7 +19,7 @@ export function Dashboard() {
 
       <div className="grid grid-cols-9 gap-4">
         <ReceiptChart />
-        <CommentsListCard />
+        <EvaluationsListCard />
       </div>
     </div>
   );

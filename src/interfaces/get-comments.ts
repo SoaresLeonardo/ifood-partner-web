@@ -1,17 +1,16 @@
-export interface CustomerProps {
-    name: string;
-    email: string;
-    phone: string;
+interface EvaluationProps {
+  evaluationId: string;
+  createdAt: Date | null;
+  customerName: string;
+  comment: string;
+  rate: number;
 }
 
-
-export interface GetCommentsResponse {
-  id: string;
-  customerId: string;
-  restaurantId: string;
-  rate: number
-  comment: string
-  createdAt: Date | null;
-  updatedAt: Date | null;
-  customer: CustomerProps
+export interface GetEvaluationsResponse {
+  evaluations: EvaluationProps[];
+  meta: {
+    perPage: number;
+    pageIndex: number;
+    totalCount: number;
+  };
 }

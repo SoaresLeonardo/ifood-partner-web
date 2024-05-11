@@ -3,9 +3,7 @@ import { Button } from "./ui/button";
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
-  PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "./ui/pagination";
@@ -32,14 +30,16 @@ export const PaginationComponent = ({
           <PaginationPrevious href="#" />
         </PaginationItem>
         <PaginationItem>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => onPageChange(pageIndex - 1)}>
             <span className="sr-only">Página anterior</span>
             <ChevronLeftIcon className="h-4 w-4" />
           </Button>
         </PaginationItem>
-        <span className="text-sm px-2 text-muted-foreground">10 de 20</span>
+        <span className="text-sm px-2 text-muted-foreground">
+          {pageIndex} de {pages}
+        </span>
         <PaginationItem>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => onPageChange(pageIndex + 1)}>
             <span className="sr-only">Próxima página</span>
             <ChevronRightIcon className="h-4 w-4" />
           </Button>

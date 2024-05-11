@@ -1,4 +1,3 @@
-import { getComments } from "@/api/get-comments";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Card,
@@ -10,11 +9,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useQuery } from "@tanstack/react-query";
 import { StarRate } from "./start-rate";
 import { CommentsSkeleton } from "./comments-list-skeleton";
+import { getEvaluations } from "@/api/get-evaluations";
 
-export const Comments = () => {
-  const { data: comments, isLoading } = useQuery({
-    queryFn: getComments,
-    queryKey: ["comment", "list"],
+export const Evaluations = () => {
+  const { data, isLoading } = useQuery({
+    queryFn: () => getEvaluations({ params: { pageIndex: 0 } }),
+    queryKey: ["evaluations", "list"],
   });
 
   return (
@@ -23,22 +23,22 @@ export const Comments = () => {
       {!isLoading && (
         <ScrollArea className="h-96 w-full pr-4 border-t">
           <div className="flex flex-col pt-5">
-            {comments?.map((comment) => (
+            {data?.evaluations?.map((evaluation) => (
               <Card
                 className="border-none"
-                key={`${comment.id} ${comment.comment} ${comment.rate}`}
+                key={`${evaluation.evaluationId} ${evaluation.comment} ${evaluation.rate}`}
               >
                 <CardContent className="flex gap-4 items-center relative">
                   <Avatar>
                     <AvatarFallback>
-                      {comment.customer.name.charAt(0).toUpperCase()}
+                      {evaluation.customerName.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col items-start text-start gap-2">
-                    <CardTitle>{comment.customer.name}</CardTitle>
-                    <CardDescription>{comment.comment}</CardDescription>
+                    <CardTitle>{evaluation.customerName}</CardTitle>
+                    <CardDescription>{evaluation.comment}</CardDescription>
                   </div>
-                  <StarRate rating={comment.rate} />
+                  <StarRate rating={evaluation.rate} />
                 </CardContent>
               </Card>
             ))}
