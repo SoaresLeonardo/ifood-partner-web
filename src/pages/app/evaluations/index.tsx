@@ -16,9 +16,59 @@ import { getEvaluations } from "@/api/get-evaluations";
 import { StarRate } from "../dashboard/_components/start-rate";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const evaluationFilterSchema = z.object({
+  personName: z.string(),
+  comment: z.string(),
+});
+
+type EvaluationFilterSchema = z.infer<typeof evaluationFilterSchema>;
 
 function Evaluations() {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const personName = searchParams.get("name") || "";
+  const comment = searchParams.get("comment") || "";
+
+  const { register, handleSubmit } = useForm<EvaluationFilterSchema>({
+    resolver: zodResolver(evaluationFilterSchema),
+    values: {
+      personName,
+      comment,
+    },
+  });
+
+  const handleEvaluationsFilters = (data: EvaluationFilterSchema) => {
+    if (data.personName) {
+      setSearchParams((prev) => {
+        prev.set("name", data.personName);
+
+        return prev;
+      });
+    } else {
+      setSearchParams((prev) => {
+        prev.delete("name");
+
+        return prev;
+      });
+    }
+
+    if (data.comment) {
+      setSearchParams((prev) => {
+        prev.set("comment", data.comment);
+
+        return prev;
+      });
+    } else {
+      setSearchParams((prev) => {
+        prev.delete("comment");
+
+        return prev;
+      });
+    }
+  };
 
   const pageIndex = z.coerce
     .number()
@@ -26,8 +76,9 @@ function Evaluations() {
     .parse(searchParams.get("page") ?? "1");
 
   const { data } = useQuery({
-    queryFn: () => getEvaluations({ params: { pageIndex } }),
-    queryKey: ["evaluations", "list", "page", pageIndex],
+    queryFn: () =>
+      getEvaluations({ params: { pageIndex, personName, comment } }),
+    queryKey: ["evaluations", "list", "page", pageIndex, personName, comment],
   });
 
   function handlePaginate(pageIndex: number) {
@@ -44,13 +95,17 @@ function Evaluations() {
         <h2 className="text-2xl font-bold">Comentários</h2>
       </div>
       <div className="mb-6 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <form
+          className="flex items-center gap-4"
+          onSubmit={handleSubmit(handleEvaluationsFilters)}
+        >
           <div className="relative">
             <PersonIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
             <Input
               className="pl-10 pr-4 py-2"
               placeholder="Buscar por pessoa"
               type="text"
+              {...register("personName")}
             />
           </div>
           <div className="relative">
@@ -59,10 +114,11 @@ function Evaluations() {
               className="pl-10 pr-4"
               placeholder="Filtrar por comentário"
               type="text"
+              {...register("comment")}
             />
           </div>
-          <Button>Filtrar comentário</Button>
-        </div>
+          <Button type="submit">Filtrar comentário</Button>
+        </form>
       </div>
       <div className="space-y-6">
         {data?.evaluations?.map((evaluation) => {

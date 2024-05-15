@@ -54,12 +54,12 @@ const data = [
 
 export const ReceiptChart = () => {
   return (
-    <Card className="col-span-6">
+    <Card className="col-span-9">
       <CardHeader>
         <CardTitle>Visão geral</CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
-        <ResponsiveContainer width="100%" height={350}>
+        <ResponsiveContainer width="100%" height={550}>
           <BarChart data={data}>
             <XAxis
               dataKey="name"

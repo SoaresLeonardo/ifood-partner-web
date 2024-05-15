@@ -5,8 +5,8 @@ import { MenuProfile } from "./_components/menu-profile";
 export const Header = () => {
   return (
     <header className="border-b">
-      <div className="flex h-16 items-center px-4">
-        <DashboardIcon width={25} height={25} className="mr-3"/> 
+      <div className="flex h-16 items-center px-12 md:px-24">
+        <DashboardIcon width={25} height={25} className="mr-3" />
 
         <HeaderNavigation />
 

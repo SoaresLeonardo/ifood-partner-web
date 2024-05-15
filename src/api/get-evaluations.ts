@@ -4,6 +4,8 @@ import { api } from "@/lib/axios";
 type GetEvaluationsProps = {
   params: {
     pageIndex: number;
+    personName: string;
+    comment: string;
   };
 };
 

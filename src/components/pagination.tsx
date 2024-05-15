@@ -36,7 +36,7 @@ export const PaginationComponent = ({
           </Button>
         </PaginationItem>
         <span className="text-sm px-2 text-muted-foreground">
-          {pageIndex} de {pages}
+          {pageIndex === 0 ? 1 : pageIndex + 1} de {pages}
         </span>
         <PaginationItem>
           <Button variant="outline" onClick={() => onPageChange(pageIndex + 1)}>
