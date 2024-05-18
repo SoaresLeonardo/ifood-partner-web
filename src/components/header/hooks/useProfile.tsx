@@ -50,12 +50,12 @@ export function useProfile() {
   }: RestaurantProfileSchema) {
     //Buscar os dados do perfil da loja em cache
     const cached = queryClient.getQueryData<GetRestaurant>([
-      "profile",
+      "restaurant",
       "details",
     ]);
 
     if (cached) {
-      queryClient.setQueryData<GetRestaurant>(["profile", "details"], {
+      queryClient.setQueryData<GetRestaurant>(["restaurant", "details"], {
         ...cached,
         name,
         description,

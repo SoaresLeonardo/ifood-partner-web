@@ -1,6 +1,7 @@
 import { DashboardIcon } from "@radix-ui/react-icons";
 import { HeaderNavigation } from "./_components/header-navigation";
 import { MenuProfile } from "./_components/menu-profile";
+import { ThemeToggle } from "../theme-toggle";
 
 export const Header = () => {
   return (
@@ -10,8 +11,9 @@ export const Header = () => {
 
         <HeaderNavigation />
 
-        <div className="ml-auto flex items-center space-x-4">
+        <div className="ml-auto flex items-center space-x-8">
           <MenuProfile />
+          <ThemeToggle />
         </div>
       </div>
     </header>
