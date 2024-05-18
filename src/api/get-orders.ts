@@ -2,9 +2,9 @@ import { api } from "@/lib/axios";
 
 type GetOrderProps = {
   params?: {
-    customerName: number;
-    orderId: string;
-    status: string;
+    customerName: string | null;
+    orderId: string | null;
+    status: string | null;
   };
 };
 
@@ -23,7 +23,7 @@ export type OrderStatus =
   | "delivering"
   | "delivered";
 
-type GetOrdersResponse = {
+export type GetOrdersResponse = {
   orders: OrderProps[];
   meta: {
     totalCount: number;
