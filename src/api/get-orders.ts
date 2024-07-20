@@ -5,6 +5,7 @@ type GetOrderProps = {
     customerName: string | null;
     orderId: string | null;
     status: string | null;
+    pageIndex: number;
   };
 };
 
@@ -26,6 +27,8 @@ export type OrderStatus =
 export type GetOrdersResponse = {
   orders: OrderProps[];
   meta: {
+    pageIndex: number;
+    perPage: number;
     totalCount: number;
   };
 };

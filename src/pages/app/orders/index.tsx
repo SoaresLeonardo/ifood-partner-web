@@ -20,13 +20,20 @@ import {
 import { useSearchParams } from "react-router-dom";
 import { TableOrderRow } from "./_components/table-order-row";
 import { OrdersListSkeleton } from "./_components/orders-table-skeleton";
+import { z } from "zod";
+import { PaginationComponent } from "@/components/pagination";
 
 function Orders() {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const orderId = searchParams.get("orderId");
   const customerName = searchParams.get("customerName");
   const status = searchParams.get("status");
+
+  const pageIndex = z.coerce
+    .number()
+    .transform((page) => page - 1)
+    .parse(searchParams.get("page") ?? "1");
 
   const { data: orders, isLoading } = useQuery({
     queryFn: () =>
@@ -35,10 +42,27 @@ function Orders() {
           customerName,
           orderId,
           status: status === "all" ? null : status,
+          pageIndex,
         },
       }),
-    queryKey: ["order", "list", "page", customerName, orderId, status],
+    queryKey: [
+      "order",
+      "list",
+      "page",
+      customerName,
+      orderId,
+      status,
+      pageIndex,
+    ],
   });
+
+  const handleNextPage = (pageIndex: number) => {
+    setSearchParams((prev) => {
+      prev.set("page", (pageIndex + 1).toString());
+
+      return prev;
+    });
+  };
 
   return (
     <div className="w-full py-12 md:py-24">
@@ -107,6 +131,14 @@ function Orders() {
             </TableBody>
           </Table>
         </div>
+        {orders && (
+          <PaginationComponent
+            pageIndex={pageIndex}
+            perPage={orders?.meta.perPage}
+            totalCount={orders?.meta.totalCount}
+            onPageChange={handleNextPage}
+          />
+        )}
       </div>
     </div>
   );

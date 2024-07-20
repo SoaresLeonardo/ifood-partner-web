@@ -29,6 +29,7 @@ import { GetOrdersResponse, OrderProps, OrderStatus } from "@/api/get-orders";
 import { useToast } from "@/components/ui/use-toast";
 import { dispatchOrder } from "@/api/dispatch-order";
 import { ToastAction } from "@/components/ui/toast";
+import { deliverOrder } from "@/api/deliver-order";
 
 type UpdateOrderDetailsProps = {
   orderId: string;
@@ -141,6 +142,14 @@ export const UpdateOrderDetails = ({
         });
       },
     });
+
+  const { mutateAsync: deliverOrderFn, isPending: isDeliverOrder } = useMutation({
+    mutationFn: deliverOrder,
+    onSuccess: async (_, { orderId }) => {
+      updateOrderStatusOnCache(orderId, "delivered");
+      setIsOpen(false);
+    },
+  });
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
@@ -228,6 +237,20 @@ export const UpdateOrderDetails = ({
                   onClick={() => dispatchOrderFn({ orderId: order.id })}
                 >
                   Em entrega
+                  {isDispatchOrder ? (
+                    <UpdateIcon className="ml-2 animate-spin" />
+                  ) : (
+                    <CheckIcon className="ml-2" />
+                  )}
+                </Button>
+              )}
+
+              {order?.status === "delivering" && (
+                <Button
+                  disabled={isDeliverOrder}
+                  onClick={() => deliverOrderFn({ orderId: order.id })}
+                >
+                  Entregado
                   {isDispatchOrder ? (
                     <UpdateIcon className="ml-2 animate-spin" />
                   ) : (

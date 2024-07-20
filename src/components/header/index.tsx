@@ -11,9 +11,9 @@ export const Header = () => {
 
         <HeaderNavigation />
 
-        <div className="ml-auto flex items-center space-x-8">
-          <MenuProfile />
+        <div className="ml-auto flex items-center space-x-6">
           <ThemeToggle />
+          <MenuProfile />
         </div>
       </div>
     </header>
